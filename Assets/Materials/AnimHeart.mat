@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: CircleDraw
-  m_Shader: {fileID: 4800000, guid: 0a3475f47c55e4dd3b6d0a8c5f7e2ea7, type: 3}
+  m_Name: AnimHeart
+  m_Shader: {fileID: 4800000, guid: 1ea69e2dc316d4dc98e07298a1d8309e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -72,5 +72,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.029411793, g: 0.79918844, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.30147058, b: 0.9229205, a: 1}
+    - _EmissionColor: {r: 2.9338236, g: 0.0431445, b: 2.1363957, a: 1}
+    - _HeartColor: {r: 1, g: 0.32352942, b: 0.81338763, a: 1}
