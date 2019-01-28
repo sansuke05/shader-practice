@@ -42,7 +42,7 @@ Shader "Sansuke05/Rainbow" {
             //clip(mask.r - 0.5); // do not draw if mask.r is less than 0.5
 
             float3 col = HSVToRGB( float3(mulTime, _Saturation, _Value) );
-            o.Albedo = (mask.rgb > 0.001 ) ? mask * col : tex2D(_MainTex2, IN.uv_MainTex2);
+            o.Albedo = (mask.rgb > 0.5 ) ? mask * col : tex2D(_MainTex2, IN.uv_MainTex2);
             //o.Albedo = _BaseColor; //* mask;
             o.Emission = col * mask.rgb;
             o.Alpha = 1;
