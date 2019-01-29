@@ -1,8 +1,11 @@
 Shader "Sansuke05/Rainbow" {
     Properties {
-        _BaseColor("Base Color", Color) = (0, 0, 0, 1)
-        _MainTex("Emission Mask Texture", 2D) = "white" {}
-        _MainTex2("Texture", 2D) = "white" {}
+        _MainTex("Base Texture", 2D) = "white" {}
+        _EmissionMaskTex("Emission Mask Texture", 2D) = "white" {}
+        _MaskLevel("Emission Mask level", Range(0, 1)) = 0.5
+        _OverTex("Metallic and Smoothness Texture", 2D) = "white" {}
+        _Metallic ("Metallic", Range(0,1)) = 0.0
+        _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Speed("Speed", Range( 0 , 3)) = 0.2
         _Value("Value", Range( 0 , 1)) = 0.5
 		_Saturation("Saturation", Range( 0 , 1)) = 0.5
@@ -20,12 +23,16 @@ Shader "Sansuke05/Rainbow" {
 
         struct Input {
             float2 uv_MainTex;
-            float2 uv_MainTex2;
+            float2 uv_EmissionMaskTex;
+            float2 uv_OverTex;
         };
 
-        fixed4 _BaseColor;
         sampler2D _MainTex;
-        sampler2D _MainTex2;
+        sampler2D _EmissionMaskTex;
+        sampler2D _OverTex;
+        half _MaskLevel;
+        half _Metallic;
+        half _Glossiness;
         float _Speed;
         float _Saturation;
         float _Value;
@@ -38,13 +45,14 @@ Shader "Sansuke05/Rainbow" {
 
         void surf(Input IN, inout SurfaceOutputStandard o) {
             float mulTime = _Time.y * _Speed;
-            float4 mask = tex2D(_MainTex, IN.uv_MainTex);
-            //clip(mask.r - 0.5); // do not draw if mask.r is less than 0.5
+            float4 mask = tex2D(_EmissionMaskTex, IN.uv_EmissionMaskTex);
 
             float3 col = HSVToRGB( float3(mulTime, _Saturation, _Value) );
-            o.Albedo = (mask.rgb > 0.5 ) ? mask * col : tex2D(_MainTex2, IN.uv_MainTex2);
-            //o.Albedo = _BaseColor; //* mask;
+            o.Albedo = (mask.rgb > _MaskLevel ) ? mask * col : tex2D(_MainTex, IN.uv_MainTex);
             o.Emission = col * mask.rgb;
+
+            o.Metallic = tex2D(_OverTex, IN.uv_OverTex).a * _Metallic;
+            o.Smoothness = tex2D(_OverTex, IN.uv_OverTex).a * _Glossiness;
             o.Alpha = 1;
         }
 

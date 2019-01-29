@@ -41,3 +41,5 @@ Assets/StreamingAssets/crashlytics-build.properties
 
 # friends files
 Assets/mado/*
+Assets/Texture/testdata/*
+Assets/Texture/testdata.meta
